@@ -1,0 +1,57 @@
+{%  extends 'Turismo/base.html' %}
+
+{% load static %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+{% endblock %}
+{% block contenido %}
+
+<h2>Mis Reservas</h2>
+<br><br>
+<table class="table table-dark table-hover">
+     <thead>
+       <tr>
+         <th scope="col">#</th>
+         <th scope="col">departamento</th>
+         <th scope="col">Fecha de Ida</th>
+         <th scope="col">Fecha de Vuelta</th>
+         <th scope="col">Estado</th>
+         <th scope="col">Total</th>
+       </tr>
+     </thead>
+     <tbody>
+       <tr>
+         <th scope="row">1</th>
+         <td>La Serena</td>
+         <td>10/10/21</td>
+         <td>20/10/21</td>
+         <td>Reservado</td>
+         <td>800.000</td>
+       </tr>
+       <tr>
+         <th scope="row">2</th>
+         <td>Pucón</td>
+         <td>05/09/21</td>
+         <td>15/09/21</td>
+         <td>Finalizado</td>
+         <td>1.300.000</td>
+       </tr>
+       <tr>
+         <th scope="row">3</th>
+         <td>Puerto Varas</td>
+         <td>20/08/21</td>
+         <td>29/08/21</td>
+         <td>Finalizado</td>
+         <td>950.000</td>
+       </tr>
+     </tbody>
+   </table>
+
+
+{% endblock %}

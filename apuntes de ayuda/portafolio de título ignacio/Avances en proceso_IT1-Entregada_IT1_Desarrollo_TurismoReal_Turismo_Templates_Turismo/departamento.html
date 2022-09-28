@@ -1,0 +1,33 @@
+{%  extends 'Turismo/base.html' %}
+
+{% load static %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+{% endblock %}
+{% block contenido %}
+
+<h2>Nuestros Departamentos</h2>
+<br><br>
+<div class="galeria">
+       
+     <a data-fancybox="gallery" href="{% static 'Turismo/img/tienda/Dep1.jpg' %}"><img src="{% static 'Turismo/img/tienda/Dep1.jpg' %}" class="figure-img img-fluid rounded">Viña del Mar<span class="badge bg-danger">New</span> </a>
+     <a data-fancybox="gallery" href="{% static 'Turismo/img/tienda/Dep2.jpg' %}"><img src="{% static 'Turismo/img/tienda/Dep2.jpg' %}"class="figure-img img-fluid rounded">Pucon<span class="badge bg-danger">New</span></a>
+     <a data-fancybox="gallery" href="{% static 'Turismo/img/tienda/Dep3.jpg' %}"><img src="{% static 'Turismo/img/tienda/Dep3.jpg' %}"class="figure-img img-fluid rounded">Puerto Varas<span class="badge bg-danger">New</span></a>
+     <a data-fancybox="gallery" href="{% static 'Turismo/img/tienda/Dep4.jpg' %}"><img src="{% static 'Turismo/img/tienda/Dep4.jpg' %}"class="figure-img img-fluid rounded">La Serena</a>
+     <a data-fancybox="gallery" href="{% static 'Turismo/img/tienda/Dep5.jpg' %}"><img src="{% static 'Turismo/img/tienda/Dep5.jpg' %}"class="figure-img img-fluid rounded">San Antonio</a>
+     <a data-fancybox="gallery" href="{% static 'Turismo/img/tienda/Dep6.jpg' %}"><img src="{% static 'Turismo/img/tienda/Dep6.jpg' %}"class="figure-img img-fluid rounded">Lican Ray</a>
+     <a data-fancybox="gallery" href="{% static 'Turismo/img/tienda/Dep7.jpg' %}"><img src="{% static 'Turismo/img/tienda/Dep7.jpg' %}"class="figure-img img-fluid rounded">Tomé</a>    
+     <a data-fancybox="gallery" href="{% static 'Turismo/img/tienda/Dep8.jpg' %}"><img src="{% static 'Turismo/img/tienda/Dep8.jpg' %}"class="figure-img img-fluid rounded">Concón</a>
+     <a data-fancybox="gallery" href="{% static 'Turismo/img/tienda/Dep9.jpg' %}"><img src="{% static 'Turismo/img/tienda/Dep9.jpg' %}"class="figure-img img-fluid rounded">Puerto Williams</a>
+     <a data-fancybox="gallery" href="{% static 'Turismo/img/tienda/Dep10.jpg' %}"><img src="{% static 'Turismo/img/tienda/Dep10.jpg' %}"class="figure-img img-fluid rounded">El tabo</a>
+    
+</div>
+
+
+{% endblock %}

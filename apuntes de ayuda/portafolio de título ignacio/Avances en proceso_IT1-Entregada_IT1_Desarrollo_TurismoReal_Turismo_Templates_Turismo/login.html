@@ -1,0 +1,116 @@
+{% extends 'Turismo/base.html' %}
+{% block contenido %}
+<div class="container login-container">
+    <div class="row">
+        <div class="col-md-6 login-form-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 login-form-2">
+                        <div class="login-form bg-light mt-4 p-4">
+                            <form action="" method="" class="row g-3">
+                                <h4>Ingresar</h4>
+                                <div class="form-group">
+                                    <label>Rut</label>
+                                    <input type="text" name="username" class="form-control" placeholder="Ingrese su Rut">
+                                    
+                                </div>
+                                <div class="form-group">
+                                    <label>Contraseña</label>
+                                    <input type="password" name="password" class="form-control" placeholder="Ingrese su contraseña">
+                                </div>
+                                <div class="form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="rememberMe">
+                                        <label class="form-check-label" for="rememberMe">Recuerdame</label>
+                                    </div>
+                                </div>
+                                <td>
+                                    <button type="submit" class="btn btn-dark float-end">Aceptar</button>
+                                </td>
+                            </form>
+                            <hr class="mt-4">
+                            <div class="col-12">
+                                <p class="text-center mb-0">¿Olvidaste tu contraseña? <a href="#">Recuperar</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    
+        <div class="col-md-6 login-form-2">
+            <div class="container">
+                
+                   
+                        <div class="login-form bg-light mt-4 p-4">
+                            <form action="" method="" class="row g-3">
+                                <h4>Registrate</h4>
+                
+                            <div class="row">
+                                <tr>
+                                    <div class="form-group col-lg-6" >
+                                        <label>Nombre</label>
+                                        <input type="text" name="username" class="form-control" placeholder="Ingrese Nombre">
+                                    </div>
+                
+                                    <div class="form-group col-lg-6">
+                                        <label>Apellido Paterno</label>
+                                        <input type="text" name="username" class="form-control" placeholder="Ingrese Apellido Paterno">
+                                    </div>
+                
+                                    <div class="form-group col-lg-6">
+                                        <label>Apellido Materno</label>
+                                        <input type="text" name="username" class="form-control" placeholder="Ingrese Apellido Materno">
+                                    </div>
+                                </tr>
+                
+                                
+                
+                                    <div class="form-group col-lg-6">
+                                        <label>Rut</label>
+                                        <input type="text" name="username" class="form-control" placeholder="Ingrese su Rut">
+                                    </div>
+                
+                                    <div class="form-group col-lg-6">
+                                        <label>Email</label>
+                                        <input type="email" id="mail" name="user_email" class="form-control" placeholder="Ingrese su Email">
+                                    </div>
+                
+                                    <div class="form-group col-lg-6">
+                                        <label>Direccion</label>
+                                        <input type="text" name="username" class="form-control" placeholder="Ingrese su Direccion">
+                                    </div>
+                                
+                
+                                
+                
+                                    <div class="form-group col-lg-6">
+                                        <label>Celular</label>
+                                        <input type="text" name="username" class="form-control" placeholder="Ingrese su Celular">
+                                    </div>
+                
+                                    <div class="form-group col-lg-6">
+                                        <label>Contraseña</label>
+                                        <input type="password" name="password" class="form-control" placeholder="Ingrese su Contraseña">
+                                    </div>
+                
+                                    <div class="form-group col-lg-7">
+                                        <button onclick="location.href='http://localhost:8000/base2/'" type="button" class="btn btn-dark float-end">Aceptar</button>
+                                    </div>
+                            
+                            </div>
+                        </form>
+            
+                           
+                        </div>
+                    
+                
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+{% endblock %}

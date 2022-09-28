@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Turismo Real</title>
+    <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,700;1,400;1,700&family=Open+Sans:ital,wght@0,400;0,700;1,600&display=swap" rel="stylesheet">
+    {% load static %}
+    {% block css %}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+    {% endblock %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{% static 'Turismo/css/estilos.css' %}">
+    <link rel="stylesheet" href="https://www.markuptag.com/bootstrap/5/css/bootstrap.min.css">
+    <script src="https://www.markuptag.com/bootstrap/5/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+    
+    <header id="header">
+        <img class="menu" src="{% static 'Turismo/img/menuiconwhite.png' %}'" alt="menu" id="menu">
+        <div class="contenedor_logo">
+            <img  class="logo"  src="{% static 'Turismo/img/LogoTurismoReal.jpg'%}" alt="logo">
+        </div>
+
+        <div>
+
+            <nav id="nav">
+                <ul>
+                    <li><a href="{% url 'home' %}"> Inicio </a></li>
+                    <li><a href="{% url 'departamento' %}">Departamentos</a></li>
+                    <li><a href="{% url 'home2' %}">Reservar</a></li>
+                    <li><a href="{% url 'base2' %}">Mis Reservas</a></li>
+                    <li><a href="{% url 'contacto' %}">Mi Perfil</a></li>
+                    <li><a href="{% url 'login' %}">Login</a></li>
+                </ul>
+            </nav>
+
+        </div>
+
+    </header>
+
+    <div id="contenido">
+        {% block contenido %}
+        {% endblock %}
+    </div>
+
+
+    <footer>
+        <div class="logo_footer">
+            <img src="{% static 'Turismo/img/LogoTurismoReal.jpg' %}" alt="logo">
+            
+        </div>
+        <!-- Copyright -->
+        <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+            © 2021 Copyright:
+            <a class="text-reset fw-bold" href="www.google.com/perritos">TurismoReal.cl</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="{% static 'Turismo/js/menu.js' %} "></script>
+
+    
+    {% block js %}
+    {% endblock %}
+</body>
+</html>

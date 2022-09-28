@@ -1,0 +1,7 @@
+diagrama de despliegue
+diagrama de clases
+modelo entidad relación
+
+vistas 4 + 1
+
+requisito no funcional certificado ssl

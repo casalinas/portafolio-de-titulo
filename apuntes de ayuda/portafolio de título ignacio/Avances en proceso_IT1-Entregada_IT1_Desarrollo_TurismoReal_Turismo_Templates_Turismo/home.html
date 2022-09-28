@@ -1,0 +1,94 @@
+{%  extends 'Turismo/base.html' %}
+
+{% load static %}
+
+{% block js %}
+<script src="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('.slider').bxSlider({
+        mode: 'fade',//horizontal, vertical, fade
+        auto: true,
+        pause: 2000
+    });
+    });
+</script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/bxslider/4.2.12/jquery.bxslider.css">
+
+{% endblock %}
+{% block contenido %}
+<div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+    </div>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img src="{% static 'Turismo/img/tienda/Dep4.jpg' %}" class="d-block w-100" alt="{% static 'Turismo/img/tienda/Dep4.jpg' %}">
+        <div class="carousel-caption d-none d-md-block">
+            <h1 style="color:#ffff" >Viña del Mar<span class="badge bg-danger">New</span></h1>
+            <h2 style="color:#9e2424">30m</h2>
+            <h2 style="color:#9e2424">Estacionamiento</h2>
+            <h2 style="color:#9e2424">Piscina</h2>
+            <h1 style="color:#9e2424">$700.000</h1>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img src="{% static 'Turismo/img/tienda/Dep7.jpg' %}" class="d-block w-100" alt="{% static 'Turismo/img/tienda/Dep7.jpg' %}">
+        <div class="carousel-caption d-none d-md-block">
+            <h1 style="color:#ffff">Viña del Mar<span class="badge bg-danger">New</span></h1>
+            <h1 style="color:#9e2424">30m</h1>
+            <h1 style="color:#9e2424">Estacionamiento</h1>
+            <h1 style="color:#9e2424">Piscina</h1>
+            <h1 style="color:#9e2424">$700.000</h1>
+        </div>
+      </div>
+
+      <div class="carousel-item">
+        <img src="{% static 'Turismo/img/tienda/Dep10.jpg' %}" class="d-block w-100" alt="{% static 'Turismo/img/tienda/Dep10.jpg' %}">
+        <div class="carousel-caption d-none d-md-block">
+            <h1 style="color:#ffff">Viña del Mar<span class="badge bg-danger">New</span></h1>
+            <h1 style="color:#9e2424">30m</h2>
+            <h1 style="color:#9e2424">Estacionamiento</h2>
+            <h1 style="color:#9e2424">Piscina</h2>
+            <h1 style="color:#9e2424">$700.000</h1>
+        </div>
+      </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Atras</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Siguiente</span>
+    </button>
+</div>
+
+
+
+    <div class="row" style="height: 300px;">
+        <div class="rounded-pill" alt="300px"></div>
+            <div class="p-3 mb-2 bg-secondary text-white"> 
+                <h1>Quienes Somos</h1>
+                <p class="text-break">La empresa “Turismo Real”, es una empresa familiar que se dedica al arriendo de departamentos propiedad
+                    de la empresa, y otros servicios en zonas turísticas del país. Tiene 10 años en el mercado y de a poco se ha
+                    hecho conocida por la calidad de sus departamentos, ubicación y trato gentil hacia los clientes. Actualmente la
+                    empresa cuenta con 10 departamentos ubicados en zonas de alto interés turístico para los clientes (Viña del
+                    Mar, La Serena, Pucón, Puerto Varas, etc.), todos ellos acondicionados con un alto estándar de calidad.
+                    El negocio consiste en el arriendo diario de los departamentos, los cuales se ofrecen a través de páginas de
+                    venta tradicional y de arriendo masivo, teniendo que pagar comisiones excesivas por el servicio. Además, la
+                    empresa ofrece a sus clientes frecuentes el servicio de transporte desde/hacia los departamentos y también
+                    ofrece tours en zonas turísticas cercanas a los departamentos.</p>
+            </div>
+        </div>        
+    </div>
+
+
+{% endblock %}

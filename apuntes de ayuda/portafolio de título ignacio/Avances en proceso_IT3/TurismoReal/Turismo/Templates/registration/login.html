@@ -1,0 +1,122 @@
+{% extends 'Turismo/base.html' %}
+{% load static %}
+{% block js %}
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+{% endblock %}
+{% block contenido %}
+
+<div class="container login-container">
+    <div class="row">
+        <div class="col-md-6 login-form-1">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 login-form-2">
+                        <div class="login-form bg-light mt-4 p-4">
+                            <form action="" method="POST" class="row g-3">
+                                <h4>Ingresar</h4>
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label>Rut</label>
+                                    <input type="text" name="usuario" class="form-control"
+                                        placeholder="Ingrese su Rut">
+
+                                </div>
+                                <div class="form-group">
+                                    <label>Contraseña</label>
+                                    <input type="password" name="contrasena" class="form-control"
+                                        placeholder="Ingrese su contraseña">
+                                </div>
+                                <td>
+                                    <input type="submit" value="Login" class="btn btn-dark float-end">
+                                </td>
+                            </form>
+                            {{mensaje}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-6 login-form-2">
+            <div class="container">
+                <div class="login-form bg-light mt-4 p-4">
+
+                    <div class="row">
+
+                        <form action="" method="POST" class="row g-3">
+                            <h4>Registrarse</h4>
+
+                            {% csrf_token %}
+
+                            <tr>
+                                <div class="form-group col-lg-6">
+                                    <label>Nombre</label>
+                                    <input type="text" name="nombre" class="form-control"
+                                        placeholder="Ingrese Nombre">
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label>Apellido Paterno</label>
+                                    <input type="text" name="appat" class="form-control"
+                                        placeholder="Ingrese Apellido Paterno">
+                                </div>
+
+                                <div class="form-group col-lg-6">
+                                    <label>Apellido Materno</label>
+                                    <input type="text" name="apmat" class="form-control"
+                                        placeholder="Ingrese Apellido Materno">
+                                </div>
+                            </tr>
+
+                            <div class="form-group col-lg-6">
+                                <label>Rut</label>
+                                <input type="text" name="rut" class="form-control" placeholder="Ingrese su Rut">
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label>Email</label>
+                                <input type="email" id="mail" name="email" class="form-control"
+                                    placeholder="Ingrese su Email">
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label>Telefono</label>
+                                <input type="text" name="telefono" class="form-control"
+                                    placeholder="Ingrese su Celular">
+                            </div>
+
+                            <div class="form-group col-lg-6">
+                                <label>Contraseña</label>
+                                <input type="password" name="contrasena" class="form-control"
+                                    placeholder="Ingrese su Contraseña">
+                            </div>
+
+                            <div class="form-group col-lg-7">
+                                <input type="submit" value = "Guardar"
+                                    class="btn btn-dark float-end">
+                            </div>
+                            
+                        </form>
+                        {{mensaje}}
+                    </div>
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+</div>
+{% endblock %}

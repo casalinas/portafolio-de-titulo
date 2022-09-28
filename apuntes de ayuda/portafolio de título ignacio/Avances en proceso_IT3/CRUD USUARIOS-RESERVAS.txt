@@ -1,0 +1,480 @@
+--REGISTRAR USUARIO CONTRASEÑA---
+drop PROCEDURE SP_CREAR_USUARIO;
+CREATE SEQUENCE SQ_USUARIOS;
+CREATE SEQUENCE SQ_USPASS;
+
+set serveroutput on;
+
+CREATE OR REPLACE PROCEDURE SP_CREAR_USUARIO (p_nombre VARCHAR2,p_rut VARCHAR2,p_appat VARCHAR2,p_apmat VARCHAR2,p_telefono VARCHAR2,p_email VARCHAR2,p_contrasena VARCHAR2,P_RESP OUT NUMBER)
+IS
+
+EX_US number;
+ID_U number;
+BEGIN
+EX_US:=0;
+ID_U :=SQ_USUARIOS.NEXTVAL;
+
+
+select count(*) into EX_US from USUARIOS where RUT = p_rut ;
+if EX_US = 0 THEN
+
+        INSERT INTO USUARIOS VALUES(
+                ID_U,
+                p_nombre,
+				p_rut,
+				p_appat,
+				p_apmat,
+				to_date(sysdate, 'yyyy/mm/dd'),
+				p_telefono,
+				p_email,
+                1);
+
+
+    INSERT INTO USUARIOS_CONTRASENAS VALUES(
+                SQ_USPASS.NEXTVAL,
+                ID_U,
+				p_contrasena,
+				p_rut,
+				1,
+				to_date(sysdate, 'yyyy/mm/dd')
+                );
+                
+
+    P_RESP:=0;
+    else
+    P_RESP:=2;
+    DBMS_OUTPUT.PUT_LINE('ERROR: USUARIO YA REGISTRADO');
+    end if;
+    
+EXCEPTION 
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('ERROR:DATOS INCORRECTOS');
+    P_RESP:=1;    
+END;
+
+-------------PROBANDO CREAR USUARIO------------------
+-----LA R ES LA RESPUESTA----------------------------
+DECLARE 
+R NUMBER;
+begin
+
+ SP_CREAR_USUARIO('cristobal','11222000-2','marmar','perez','09987723','bastianxd@gmail.com','123',R);
+ DBMS_OUTPUT.PUT_LINE(R);
+end;
+
+------------------------
+-----crear usuario SINRESPUESTA-------------
+-----------------------------
+create or replace NONEDITIONABLE PROCEDURE SP_CREAR_USUARIO_2 (p_nombre VARCHAR2,p_rut VARCHAR2,p_appat VARCHAR2,p_apmat VARCHAR2,p_telefono VARCHAR2,p_email VARCHAR2,p_contrasena VARCHAR2)
+IS
+
+EX_US number;
+ID_U number;
+BEGIN
+EX_US:=0;
+ID_U :=SQ_USUARIOS.NEXTVAL;
+
+
+select count(*) into EX_US from USUARIOS where RUT = p_rut ;
+if EX_US = 0 THEN
+
+        INSERT INTO USUARIOS VALUES(
+                ID_U,
+                p_nombre,
+				p_rut,
+				p_appat,
+				p_apmat,
+				to_date(sysdate, 'yyyy/mm/dd'),
+				p_telefono,
+				p_email,
+                1);
+
+
+    INSERT INTO USUARIOS_CONTRASENAS VALUES(
+                SQ_USPASS.NEXTVAL,
+                ID_U,
+				p_contrasena,
+				p_rut,
+				1,
+				to_date(sysdate, 'yyyy/mm/dd')
+                );
+
+
+
+
+
+    end if;
+
+   COMMIT;
+   EXCEPTION
+    WHEN OTHERS THEN 
+    ROLLBACK;
+END ;
+
+
+DECLARE 
+R NUMBER;
+begin
+
+ SP_CREAR_USUARIO_2('prueba','23344444-1','mala','perez','09987723','bastianxd@gmail.com','123');
+
+end;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----------------------------------
+------LISTAR USUARIOS-------------
+CREATE OR REPLACE PROCEDURE SP_LISTAR_USUARIO(p_lista out SYS_REFCURSOR)
+IS
+BEGIN
+    open p_lista for select * from USUARIOS;
+END;
+----PROBANDO LISTAR USUARIO-------
+DECLARE
+  C_EMP SYS_REFCURSOR;
+  TYPE new_type IS RECORD(ID_USUARIO NUMBER, NOMBRE VARCHAR2(50), RUT VARCHAR2(15), APPAT VARCHAR2(50), APMAT VARCHAR2(50), FECHA_INGRESO DATE, TELEFONO VARCHAR2(25), EMAIL VARCHAR2(100), PERFIL_ID_PERFIL NUMBER);
+  L_REC new_type;
+BEGIN
+  SP_LISTAR_USUARIO(C_EMP);
+  LOOP
+ FETCH c_emp INTO l_rec;
+ EXIT WHEN c_emp%NOTFOUND;
+
+     dbms_output.put_line(l_rec.ID_USUARIO||'_'||
+                          l_rec.NOMBRE||'_'||
+                          l_rec.RUT||'_'||
+                          l_rec.APPAT||'_'||
+			  l_rec.APMAT||'_'||
+			  l_rec.FECHA_INGRESO||'_'||
+			  l_rec.TELEFONO||'_'||
+			  l_rec.EMAIL||'_'||
+			  l_rec.PERFIL_ID_PERFIL);
+ END LOOP;
+
+CLOSE c_emp;
+END;
+
+
+-------ELIMINAR USUARIO--------
+CREATE OR REPLACE PROCEDURE SP_ELIMINAR_USUARIO
+(P_RUT VARCHAR2)
+AS
+BEGIN
+
+    DELETE FROM USUARIOS_CONTRASENAS
+    WHERE USUARIO = P_RUT;
+    
+    DELETE FROM USUARIOS
+    WHERE RUT = P_RUT;
+
+
+
+   COMMIT;
+   EXCEPTION
+    WHEN OTHERS THEN 
+    ROLLBACK;
+END ;
+------PROBANDO ELIMINAR---------
+DECLARE 
+
+begin
+
+ SP_ELIMINAR_USUARIO('20237953-2');
+
+end;
+
+
+---------VALIDAR USUARIO--------------
+set serveroutput on;
+CREATE OR REPLACE PROCEDURE SP_VALIDAR_USUARIO (p_rut VARCHAR2,p_contrasena VARCHAR2,P_RESP OUT NUMBER)
+IS
+
+V_US number;
+BEGIN
+V_US:=0;
+
+select count(*) into V_US from USUARIOS u, USUARIOS_CONTRASENAS us 
+where u.id_usuario =  us.usuarios_id_usuario 
+and u.RUT= p_rut 
+and us.contrasena = p_contrasena;
+
+if V_US = 1 THEN
+
+    P_RESP:=0;
+    DBMS_OUTPUT.PUT_LINE('USUARIO INGRESA CORRECTAMENTE');
+    end if;
+    
+EXCEPTION 
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('ERROR:DATOS INCORRECTOS');
+    P_RESP:=1;    
+END;
+
+---PROBAR VALIDAR USUARIO------------
+DECLARE 
+R NUMBER;
+begin
+
+ SP_VALIDAR_USUARIO('20237953-2','123',R);
+ DBMS_OUTPUT.PUT_LINE(R);
+end;
+
+
+-----ACTUALIZAR USUARIO------------
+set serveroutput on;
+CREATE OR REPLACE PROCEDURE SP_MODIFICAR_USUARIO(p_nombre VARCHAR2,p_rut VARCHAR2,p_appat VARCHAR2,p_apmat VARCHAR2,p_telefono VARCHAR2,p_email VARCHAR2,p_contrasena VARCHAR2)
+
+AS
+BEGIN
+   UPDATE USUARIOS SET
+   NOMBRE = p_nombre,
+   RUT = p_rut,
+   APPAT = p_appat,
+   APMAT = p_apmat,
+   TELEFONO = p_telefono,
+   EMAIL = p_email
+   WHERE RUT = p_rut;
+   
+   UPDATE USUARIOS_CONTRASENAS SET
+   contrasena = p_contrasena
+   WHERE usuario = p_rut;
+   COMMIT;
+   EXCEPTION
+    WHEN OTHERS THEN 
+    ROLLBACK;
+END ;
+
+
+DECLARE 
+
+begin
+ SP_MODIFICAR_USUARIO ('Jesus','20237953-2','martinez','ascencio','942075696','bastian@gmail.com','12345');
+ DBMS_OUTPUT.PUT_LINE(R);
+end;
+
+------------crear reserva----------------
+CREATE SEQUENCE SQ_RESERVA;
+CREATE OR REPLACE PROCEDURE SP_CREAR_RESERVA (p_rut VARCHAR2,vID_departamento NUMBER,f_ida DATE,f_vuelta DATE,v_total VARCHAR2,P_RESP OUT NUMBER)
+IS
+
+EX_US number;
+vID_usuario varchar2(10);
+vID_r number;
+BEGIN
+EX_US:=0;
+vID_usuario:=0;
+vID_r :=SQ_RESERVA.NEXTVAL;
+
+
+select count(*) into EX_US from DEPARTAMENTOS where id_departamento = vID_departamento and ESTADO_ID_ESTADO = 1 ;
+select id_usuario into vID_usuario from USUARIOS where RUT= p_rut;
+if EX_US = 1 THEN
+
+        INSERT INTO RESERVAS VALUES(
+                vID_r,
+                vID_usuario,
+				vID_departamento,
+				f_ida,
+				f_vuelta,
+				v_total,
+				to_date(sysdate, 'yyyy/mm/dd')
+                );
+
+
+      UPDATE DEPARTAMENTOS SET ESTADO_ID_ESTADO = 2 WHERE id_departamento = vID_departamento;
+                
+
+    P_RESP:=0;
+    DBMS_OUTPUT.PUT_LINE('Departamento reservado con exito');
+    else 
+    P_RESP:=1;
+    DBMS_OUTPUT.PUT_LINE('Departamento no disponible');
+    end if; 
+
+    
+EXCEPTION 
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('ERROR:DATOS INCORRECTOS');
+    P_RESP:=2;    
+END;
+
+
+
+
+
+
+
+
+-------------PROBANDO CREAR RESERVA------------------
+-----LA R ES LA RESPUESTA----------------------------
+set serveroutput on;
+DECLARE 
+R NUMBER;
+begin
+
+ SP_CREAR_RESERVA('21237953-2',3,'21/05/22','21/05/30',150000,R);
+ DBMS_OUTPUT.PUT_LINE(R);
+end;
+
+
+-------------------agregar acompañante--------------------------
+
+create sequence SQ_Idacomp;
+
+create or replace procedure sp_agregar_acompaniante(vNombre varchar2 , vRut varchar2, vIdReserva number,P_RESP OUT NUMBER)
+is
+vID_r number;
+
+vReserv number;
+BEGIN
+vID_r :=SQ_RESERVA.NEXTVAL;
+vReserv := 0 ;
+
+select count(*) into vReserv from reservas where ID_RESERVA = vIdReserva;
+
+if vReserv = 1 then
+    insert into acompanantes values (vID_r,vNombre,vRut,vIdReserva);
+
+   P_RESP:=0;
+    DBMS_OUTPUT.PUT_LINE('Acompañante registrado correctamente');
+    else 
+    P_RESP:=1;
+    DBMS_OUTPUT.PUT_LINE('Reserva no Existe');
+    end if; 
+
+
+EXCEPTION 
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('ERROR:DATOS INCORRECTOS');
+    P_RESP:=2;    
+
+end;
+
+-------------PROBANDO añadir acompañante------------------
+-----LA R ES LA RESPUESTA----------------------------
+set serveroutput on;
+DECLARE 
+R NUMBER;
+begin
+
+ sp_agregar_acompaniante('pedro pascal','22456754-2',5,R);
+ sp_agregar_acompaniante('julio torrres','32456654-2',5,R);
+ DBMS_OUTPUT.PUT_LINE(R);
+end;
+----------------------------------------------------------------
+
+
+-------------------agregar servicios--------------------------
+
+create sequence SQ_Idservicios;
+
+create or replace procedure sp_agregar_servicios(vIdDep number,vNombreServ varchar2 , vHorarioServ varchar2, vIdValorServ number ,vDescrip varchar2 ,P_RESP OUT NUMBER)
+is
+vID_Serv number;
+
+vReserv number;
+BEGIN
+vID_Serv :=SQ_Idservicios.NEXTVAL;
+vReserv := 0 ;
+
+select count(*) into vReserv from DEPARTAMENTOS where ID_DEPARTAMENTO = vIdDep;
+
+if vReserv = 1 then
+
+    
+    INSERT INTO SERVICIOS VALUES (vID_Serv, vIdDep,vNombreServ,vHorarioServ,vIdValorServ,vDescrip,1);
+
+   P_RESP:=0;
+    DBMS_OUTPUT.PUT_LINE('Servicio Registrado Correctamente');
+elsif vReserv = 0 then
+    P_RESP:=1;
+    DBMS_OUTPUT.PUT_LINE('El Id del Departamento es Incorrecto');
+    end if; 
+
+
+EXCEPTION 
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('ERROR:DATOS INCORRECTOS');
+    P_RESP:=2;    
+
+end;
+
+
+-------------PROBANDO añadir Servicios-------------
+-----LA R ES LA RESPUESTA----------------------------
+set serveroutput on;
+DECLARE 
+R NUMBER;
+begin
+
+ sp_agregar_servicios(15,'Tour Lago Verde', '13:00 a 16:00', 15000,'Visita al Lago Verde con relatos de la zona',R);
+
+ DBMS_OUTPUT.PUT_LINE(R);
+end;
+
+------------------Reservar Servicios--------------------------
+
+create sequence SQ_Idresserv;
+
+create or replace procedure sp_reservar_servicios(vIdReserv number,vIdServ number ,P_RESP OUT NUMBER)
+is
+vID_Resserv number;
+vServVal number;
+BEGIN
+vID_Resserv :=SQ_Idresserv.NEXTVAL;
+vServVal := 0 ;
+
+select ACTIVO into vServVal from SERVICIOS where id_servicios = vIdServ;
+
+if vServVal = 1 then
+
+    
+    INSERT INTO SERVICIOSRESERVADOS VALUES (vID_Resserv,vIdReserv,vIdServ,null,null,null);
+
+   P_RESP:=0;
+    DBMS_OUTPUT.PUT_LINE('Servicio Reservado Correctamente');
+elsif vServVal = 0 then
+    P_RESP:=1;
+    DBMS_OUTPUT.PUT_LINE('El Servicio se encuentra inhabilitado');
+    end if; 
+
+
+EXCEPTION 
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('ERROR:DATOS INCORRECTOS');
+    P_RESP:=2;    
+
+end;
+
+
+-------------PROBANDO Reservar Servicios-------------
+-----LA R ES LA RESPUESTA----------------------------
+set serveroutput on;
+DECLARE 
+R NUMBER;
+begin
+
+ sp_reservar_servicios(41,1,R);
+
+ DBMS_OUTPUT.PUT_LINE(R);
+end;
+
+
+

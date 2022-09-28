@@ -1,0 +1,115 @@
+----Procedimiento para guardar departamento e imagen a la vez-------
+--1
+CREATE SEQUENCE SQ_ADD_IMAGEN;
+
+
+create or replace PROCEDURE SP_GUARDAR_IMAGEN2(p_depa VARCHAR2,p_nro VARCHAR2,p_valor NUMBER, id_edificio NUMBER, id_estado NUMBER,  p_nombre VARCHAR2, p_imagen BLOB)
+IS
+
+EX_US number;
+ID_U number;
+BEGIN
+EX_US:=0;
+ID_U :=SQ_DEPAS.NEXTVAL;
+
+
+select count(*) into EX_US from departamentos where n_departamento = p_nro ;
+if EX_US = 0 THEN
+
+ INSERT INTO DEPARTAMENTOS VALUES(ID_U,
+                                p_depa,p_nro,p_valor,id_edificio, id_estado);  
+
+
+  insert into imagenes VALUES(SQ_ADD_IMAGEN.nextval, p_nombre, p_imagen, ID_U);
+
+
+
+    end if;
+
+EXCEPTION 
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('ERROR:DATOS INCORRECTOS');
+
+END;
+
+----Procedimiento para agregar inventario------------
+--2
+
+CREATE SEQUENCE SQ_INVENTARIO;
+CREATE OR REPLACE PROCEDURE SP_AGREGAR_INVENTARIO(p_nombre VARCHAR2, p_cantidad NUMBER, p_valor NUMBER)
+IS
+BEGIN
+    Insert into inventario VALUES(SQ_INVENTARIO.nextval, p_nombre, p_cantidad, p_valor, (select max(id_departamento) from departamentos));
+END;
+
+------PROCDEMIENTO PARA ELIMINAR DEPARATAMENTO----------
+--3
+
+CREATE OR REPLACE PROCEDURE SP_ELIMINAR_TODO_DEPARTAMENTO(p_rut VARCHAR2)
+AS
+id number;
+BEGIN
+id:=0;
+SELECT id_departamento INTO id from departamentos WHERE n_departamento=p_rut;
+DELETE FROM inventario WHERE departamentos_id_departamento = id;
+DELETE FROM imagenes WHERE departamentos_id_departamento = id;
+DELETE FROM reservas WHERE departamentos_id_departamento = id;
+DELETE FROM departamentos WHERE id_departamento = id;
+END;
+
+
+------PROCEDIMIENTO APRA CREAR USUARIO ADMINISTRADOR--------
+--4
+
+create or replace PROCEDURE SP_CREAR_USUARIO_ADMIN (p_nombre VARCHAR2,p_rut VARCHAR2,p_appat VARCHAR2,p_apmat VARCHAR2,p_telefono VARCHAR2,p_email VARCHAR2,p_contrasena VARCHAR2,P_RESP OUT NUMBER)
+IS
+
+EX_US number;
+ID_U number;
+BEGIN
+EX_US:=0;
+ID_U :=SQ_USUARIOS.NEXTVAL;
+
+
+select count(*) into EX_US from USUARIOS where RUT = p_rut ;
+if EX_US = 0 THEN
+
+    INSERT INTO USUARIOS VALUES(
+                ID_U,
+                p_nombre,
+				p_rut,
+				p_appat,
+				p_apmat,
+				to_date(sysdate, 'yyyy/mm/dd'),
+				p_telefono,
+				p_email,
+                2);
+
+   INSERT INTO USUARIOS_CONTRASENAS VALUES(
+                SQ_USPASS.NEXTVAL,
+                ID_U,
+				p_contrasena,
+				p_rut,
+				1,
+				to_date(sysdate, 'yyyy/mm/dd')
+                );
+
+    P_RESP:=0;
+    else
+    P_RESP:=2;
+    DBMS_OUTPUT.PUT_LINE('ERROR: USUARIO YA REGISTRADO');
+    end if;
+
+EXCEPTION 
+    WHEN OTHERS THEN
+    DBMS_OUTPUT.PUT_LINE('ERROR:DATOS INCORRECTOS');
+    P_RESP:=1;    
+END;
+
+
+
+------INSERT NECESARIO PARA ELIMINAR DEPARTAMENTO------------
+
+INSERT INTO estado VALUES(4, 'ELIMINADO');
+
+commit;
